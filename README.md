@@ -90,7 +90,7 @@ The tensorflow library greatly simplifies creating neural networks. The first ne
 ```
 
 #### Improved model
-In the improved model instead of the basic input layer there is a convolution layer. It has 32 filters. This number works fine for datasets which are not very complicated. The kernel size 3x3 is a suitable number for low dimensional images such as the clothing images used in MNIST database. In this model I am also using different kernel initializer. Kernel initializers are functions that determine the starting values of weights used in neural networks. Chosen he uniform initializer is better for nodes which use ReLU activation functions.  The next layer in the model applies the previously mentioned pooling with the window size of 2x2. Rest of the model looks similar to the basic one but with a smaller number of neurons in the hidden layer.
+In the improved model instead of the basic input layer there is a convolution layer. It has 32 filters. This number works fine for datasets which are not very complicated. The kernel size 3x3 is a suitable number for low dimensional images such as the clothing images used in MNIST database. In this model I am also using different kernel initializer. Kernel initializers are functions that determine the starting values of weights used in neural networks. Chosen he uniform initializer is better for nodes which use ReLU activation functions. The second layer is also convolutional but this time it has 64 filters as it is deeper in the network.  The next layer in the model applies the previously mentioned pooling with the window size of 2x2. Rest of the model looks similar to the basic one but with a smaller number of neurons in the hidden layer.
 ```python
     xTrain.reshape((xTrain.shape[0], 28, 28, 1)) 
     xTest.reshape((xTest.shape[0], 28, 28, 1))
@@ -98,6 +98,7 @@ In the improved model instead of the basic input layer there is a convolution la
     model = tf.keras.Sequential(
         [tf.keras.layers.Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform',
                                 input_shape=(28, 28, 1)),
+         tf.keras.layers.Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_uniform'),
          tf.keras.layers.MaxPooling2D((2, 2)),
          tf.keras.layers.Flatten(),
          tf.keras.layers.Dense(70, activation='relu', kernel_initializer='he_uniform'),
@@ -129,8 +130,9 @@ To determine the accuracy of the algorithm it has to be evaluated. Evaluation re
 ## Results
 
 ### Tests
+First I tested the database with the KNN algorithm which I wrote for one of the prievous tasks with PCA applied on the dataset. The algorithm concluded that it can reach a smallest classification error at around 0,25 with 200 neighbours. 
 
-I have decided to test three algorithms. The first one is a basic machine learning model that I mentioned earlier, the second is the same model but the dimensionality of data provided for it is reduced by the PCA to 100 features and the last one which uses convolutional neural network. In the tests I am also using computing power of my computer's graphics card.
+For this task I have decided to test three algorithms. The first one is a basic machine learning model that I mentioned earlier, the second is the same model but the dimensionality of data provided for it is reduced by the PCA to 100 features and the last one which uses convolutional neural network. In the tests I am also using computing power of my computer's graphics card.
 
 **Computer used for tests:**
 
@@ -152,7 +154,7 @@ RAM: 32GB
 
 **Basic model with PCA**
 
-AVG PCA time: 4,15s
+AVG PCA time: 4,10s
 
 Time of PCA convertion is not included in the table!
 
@@ -168,16 +170,16 @@ Time of PCA convertion is not included in the table!
 **Improved model with CNN**
 |Test | Acuracy |Loss | Time |
 |---|---|---|---|
-|1. |0,908|0,269|35,59s|
-|2. |0,914|0,275|33,56s|
-|3. |0,914|0,271|31,96s|
-|4. |0,906|0,283|33,12s|
-|5. |0,913|0,265|33,13s|
-|AVG|0,911|0,273|33,47s|
+|1. |0,916|0,306|42,95s|
+|2. |0,919|0,342|46,85s|
+|3. |0,921|0,304|43,05s|
+|4. |0,919|0,342|42,56s|
+|5. |0,924|0,291|46,27s|
+|AVG|0,920|0,317|44,34s|
 
 **Note**
 
-Running the tests without the graphic processor's support gave much different time results. Basic models were approximately 3 times faster but the improved model trained the data more than 2 times longer. As expected, other results were similar.
+Running the tests without the graphic processor's support gave much different time results. Basic models were approximately 3 times faster but the improved model trained the data more than 6 times longer. As expected, other results were similar.
 
 
 ### Comparison with similar models
@@ -186,7 +188,7 @@ To compare my model I have put it along with other which also use CNN.
 
 |Submiter|Method|Accuracy|
 |---|---|---|
-|Me|Conv + pooling + hidden layer| 0,911|
+|Me|2 Conv + pooling + hidden layer| 0,920|
 |Kashif Rasul|2 Conv+pooling|0,876|
 |Tensorflow's doc|2 Conv+pooling|0,916|
 |@AbhirajHinge|2 Conv+pooling+ELU activation (PyTorch)|0,903|
