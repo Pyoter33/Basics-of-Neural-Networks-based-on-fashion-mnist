@@ -216,7 +216,7 @@ import time
 ```
 ### Running
 
-To run the script you need to download the code from github repository. If you have the mnist dataset files in the same folder as the program you do not need to set any path. If you have it in another directory, you need to specify them as arguments in the method testModels() in main giving path to the directory with training files first and the one with test files second. To start training and see visualizations and statistics just run the main function.
+To run the script you need to download the code from github repository and Fashion-MNIST dataset from https://github.com/zalandoresearch/fashion-mnist. If you have the mnist dataset files in the same folder as the program you do not need to set any path. If you have it in another directory, you need to specify them as arguments in the method testModels() in main giving path to the directory with training files first and the one with test files second. To start training and see visualizations and statistics just run the main function.
 
 To get similar time results to those showed in the Results section you need to have a graphics card supported by NVIDIA CUDA. Than you need to install CUDA on your computer. Instruction: https://developer.nvidia.com/cuda-zone
 
