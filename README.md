@@ -1,7 +1,7 @@
 # Fashion-MNIST
 
 ## Introduction
-The Fashion-MNIST database is a great tool for practicing various machine learning algorithm. The database consists of a training set of 60000 and a test set of 10000 examples of different pieces of clothing associated with 10 different classes. The examples are represented by 28x28 grayscale images. The goal is to create an algorithm which will be able to achieve the highest accuracy of classifying images from the test set to their respective labels. To get to that point the algorithm has to be first trained with the provided training dataset. There many ways to properly train the algorithm. I have decided to use neural networks.
+The Fashion-MNIST database is a great tool for practicing various machine learning algorithms. The database consists of a training set of 60000 and a test set of 10000 examples of different pieces of clothing associated with 10 different classes. The examples are represented by 28x28 grayscale images. The goal is to create an algorithm which will be able to achieve the highest accuracy of classifying images from the test set to their respective labels. To get to that point the algorithm has to be first trained with the provided training dataset. There many ways to properly train the algorithm. I have decided to use neural networks.
 
 ## Methods
 ### Data preprocessing
@@ -27,7 +27,7 @@ The sklearn library provides PCA class which takes care of the advanced mathemat
   xTestScaled = scaler.transform(xTest)
   lowerDimensionalXTest = pca.transform(xTestScaled)
 ```
-It is crucial to fit and transform training data and only transform test data. If we were to use fit method on test data too, new mean and variance would be computed which would lead to model also learning this data and thus making it impossible to properly predict the model’s efficiency.
+It is crucial to fit and transform training data and only transform test data. If we were to use fit method on the test data too, new mean and variance would be computed which would lead the model to also learning this data and thus making it impossible to properly predict the model’s efficiency.
 
 ![pcaVisualization](https://user-images.githubusercontent.com/84713157/121813407-31dc7d80-cc6c-11eb-8149-2188c64f6dbd.png)
 *Visualization of the loss of quality after applying PCA*
@@ -35,7 +35,7 @@ It is crucial to fit and transform training data and only transform test data. I
 ### Creating models
 #### Neural networks
 Neural network is a layered representation of data vaguely inspired by the biological neural networks that constitute animal brains. Each layer consists of nodes called neurons. The nodes are connected with each other with edges. Edges typically have weights, which can be adjusted in the training process. Each layer also has a bias – an extra neuron that has no connections and holds a single numeric value. 
-Every neural network has an input layer, output layer and a number of hidden layers. The input layer is the layer that initial data is passed to. It is the first layer in every neural network. The output layer is the layer that we will retrieve our results from. All the other layers in the neural network are called hidden layers. The name ‘hidden’ represents the fact that their data cannot be observed like in case of output and input layers.
+Every neural network has an input layer, output layer and can have a number of hidden layers. The input layer is the layer that initial data is passed to. It is the first layer in every neural network. The output layer is the layer that we will retrieve our results from. All the other layers in the neural network are called hidden layers. The name ‘hidden’ represents the fact that their data cannot be observed like in case of output and input layers.
 The neurons at each layer are used to pass and transform data. The data at each subsequent neuron is defined by a weighted sum  with added bias. 
 
 ![equasion](https://user-images.githubusercontent.com/84713157/121813663-5553f800-cc6d-11eb-995b-55b6e60958ed.png)
@@ -68,7 +68,7 @@ The patterns are created with filters/kernels that are small matrices. The filte
 *Example of convolution*
 
 
-After the convolution it is a common practice to add pooling to the model. Pooling results in shrinking the matrix representing the image by taking maximum values from small windows which are ‘walked over’ the current matrix. The result is a smaller matrix but it still represents the given pattern. A smaller data is convenient for the neural networks and also makes the algorithm less sensitive which in the long run prevents overfitting.
+After the convolution it is a common practice to add pooling to the model. Pooling shrinks the matrix representing the image by taking maximum values from small windows which are ‘walked over’ the current matrix. The result is a smaller matrix but it still represents the given pattern. A smaller data is convenient for the neural networks and also makes the algorithm less sensitive which in the long run prevents overfitting.
 
 ![pooling](https://user-images.githubusercontent.com/84713157/121814117-b381da80-cc6f-11eb-97c8-13d84eb7795f.png)
 
@@ -77,7 +77,7 @@ After the convolution it is a common practice to add pooling to the model. Pooli
 
 ### Implementing models
 #### Basic model 
-The tensorflow library greatly simplifies creating neural networks. The first model I created is a basic sequential model with one hidden layer. The activation functions are relu on the hidden layer and softmax on the output. The model is using sparse categorical crossentropy as the loss function. This function produces a category index of the most likely matching category. The optimizer – adam – is a stochastic gradient descent method. 
+The tensorflow library greatly simplifies creating neural networks. The first network I created is a basic sequential model with one hidden layer. The activation functions are ReLU on the hidden layer and softmax on the output. The model is using sparse categorical crossentropy as the loss function. This function produces a category index of the most likely matching category. The optimizer – adam – is a stochastic gradient descent method. 
 ```python
     model = tf.keras.Sequential(
         [tf.keras.layers.InputLayer(input_shape=shape),
@@ -90,7 +90,7 @@ The tensorflow library greatly simplifies creating neural networks. The first mo
 ```
 
 #### Improved model
-In the improved model instead of the basic input layer there is a convolution layer. It has 32 filters. This number works fine for datasets which are not very complicated. The kernel size 3x3 is a suitable number for low dimensional images such as the clothing images used in MNIST database. In this model I am also using different kernel initializer. Kernel initializers are function that determine the starting values of weights used in neural networks. Chosen he uniform initializer is better for nodes using ReLU activation functions.  The next layer in the model applies the previously mentioned pooling with window size of 2x2. Rest of the model looks similar to the basic one but with a smaller number of neurons in the hidden layer.
+In the improved model instead of the basic input layer there is a convolution layer. It has 32 filters. This number works fine for datasets which are not very complicated. The kernel size 3x3 is a suitable number for low dimensional images such as the clothing images used in MNIST database. In this model I am also using different kernel initializer. Kernel initializers are functions that determine the starting values of weights used in neural networks. Chosen he uniform initializer is better for nodes which use ReLU activation functions.  The next layer in the model applies the previously mentioned pooling with the window size of 2x2. Rest of the model looks similar to the basic one but with a smaller number of neurons in the hidden layer.
 ```python
     xTrain.reshape((xTrain.shape[0], 28, 28, 1)) 
     xTest.reshape((xTest.shape[0], 28, 28, 1))
