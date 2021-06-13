@@ -132,7 +132,7 @@ To determine the accuracy of the algorithm it has to be evaluated. Evaluation re
 ### Tests
 First I tested the database with the KNN algorithm which I wrote for one of the prievous tasks. I also applied PCA on the dataset. The algorithm concluded that it can reach the smallest classification error at around 0,25 with 200 neighbours. 
 
-For this task I have decided to test three algorithms. The first one is a basic machine learning model that I mentioned earlier, the second is the same model but the dimensionality of data provided for it is reduced by the PCA to 100 features and the last one which uses convolutional neural network. In the tests I am also using computing power of my computer's graphics card.
+For this task I have decided to test three algorithms. The first one is a basic machine learning model that I mentioned earlier, the second is the same model but the dimensionality of data provided for it is reduced by the PCA to 100 features. The last one uses convolutional neural network. In the tests I am also using computing power of my computer's graphics card.
 
 **Computer used for tests:**
 
