@@ -1,7 +1,7 @@
 # Fashion-MNIST
 
 ## Introduction
-The Fashion-MNIST database is a great tool for practicing various machine learning algorithms. The database consists of a training set of 60000 and a test set of 10000 examples of different pieces of clothing associated with 10 different classes. The examples are represented by 28x28 grayscale images. The goal is to create an algorithm which will be able to achieve the highest accuracy of classifying images from the test set to their respective labels. To get to that point the algorithm has to be first trained with the provided training dataset. There many ways to properly train the algorithm. I have decided to use neural networks.
+The Fashion-MNIST database is a great tool for practicing various machine learning algorithms. The database consists of a training set of 60000 and a test set of 10000 examples of different pieces of clothing associated with 10 different classes. The examples are represented by 28x28 grayscale images. The goal is to create an algorithm which will be able to achieve the highest accuracy of classifying images from the test set to their respective labels. To get to that point the algorithm has to be first trained with the provided training dataset. There are many ways to properly train the algorithm. I have decided to use neural networks.
 
 ## Methods
 ### Data preprocessing
