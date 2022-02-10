@@ -9,8 +9,8 @@ The Fashion-MNIST database is a great tool for practicing various machine learni
 If every image has a 28x28 resolution, this means that it is represented by 784 features (pixels). Every feature has a value between 0 (completely black) and 255 (completely white). Neural networks work better when the values provided to the input layer have relatively small and standardized values e.g. [0, 1] or [-1, 1]. So the logical thing to do would be to divide every value by 255. This provides us with a list of features with values between 0 and 1. 
 
 ```python
-  xTrain / 255
-  xTest / 255
+  x_train / 255
+  x_test / 255
 ```
 #### PCA (Principal Component Analysis)
 PCA is used for dimensionality reduction for the visualization of high dimensional data, which means it is used to reduce number of features representing certain piece of data, in this case - image. PCA operates by finding the Principal Components of data which are  the directions, where there is the most variance in the data. Than it projects it into smaller dimensional subspace while maintaining most of the information. Detailed explanation of how the PCA works is available at 
@@ -18,14 +18,14 @@ https://towardsdatascience.com/the-mathematics-behind-principal-component-analys
 
 The sklearn library provides PCA class which takes care of the advanced mathematics for us. To further improve the effectiveness of the PCA it is important to use a StandardScaler first to standardize the dataset features even further. 
 ```python
-  scaler = StandardScaler()
-  xTrainScaled = scaler.fit_transform(xTrain)
-  pca = PCA(n_components=100)
-  lowerDimensionalXTrain = pca.fit_transform(xTrainScaled)
+    scaler = StandardScaler()
+    x_train_scaled = scaler.fit_transform(x_train)
+    pca = PCA(n_components=100)
+    lower_dimensional_x_train = pca.fit_transform(x_train_scaled)
 
-  approximation = scaler.inverse_transform(pca.inverse_transform(lowerDimensionalXTrain))
-  xTestScaled = scaler.transform(xTest)
-  lowerDimensionalXTest = pca.transform(xTestScaled)
+    approximation = scaler.inverse_transform(pca.inverse_transform(lower_dimensional_x_train))
+    x_test_scaled = scaler.transform(x_test)
+    lower_dimensional_x_test = pca.transform(x_test_scaled)
 ```
 It is crucial to fit and transform training data and only transform test data. If we were to use fit method on the test data too, new mean and variance would be computed which would lead the model to also learning this data and thus making it impossible to properly predict the model’s efficiency.
 
@@ -92,8 +92,8 @@ The tensorflow library greatly simplifies creating neural networks. The first ne
 #### Improved model
 In the improved model instead of the basic input layer there is a convolution layer. It has 32 filters. This number works fine for datasets which are not very complicated. The kernel size 3x3 is a suitable number for low dimensional images such as the clothing images used in MNIST database. In this model I am also using different kernel initializer. Kernel initializers are functions that determine the starting values of weights used in neural networks. Chosen he_uniform initializer is better for nodes which use ReLU activation function. The second layer is also convolutional but this time it has 64 filters as it is deeper in the network.  The next layer in the model applies the previously mentioned pooling with the window size of 2x2. Rest of the model looks similar to the basic one but with a smaller number of neurons in the hidden layer.
 ```python
-    xTrain.reshape((xTrain.shape[0], 28, 28, 1)) 
-    xTest.reshape((xTest.shape[0], 28, 28, 1))
+    x_train.reshape((x_train.shape[0], 28, 28, 1))
+    x_test.reshape((x_test.shape[0], 28, 28, 1))
   
     model = tf.keras.Sequential(
         [tf.keras.layers.Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform',
@@ -113,10 +113,10 @@ In the improved model instead of the basic input layer there is a convolution la
 The model is trained in epochs. Epochs determine how many times will the model be trained on the same training data set. The higher the number, the more accurate the predictions are. But if the number of epochs is too high the risk of overfitting is much greater and the training process will of course be longer. I have decided that 7 epochs will be suitable for this task.
 To determine the accuracy of the algorithm it has to be evaluated. Evaluation returns the final accuracy and loss based on comparing model outputs with correct labels in the test dataset. Predictions return an array of probabilities of every labels for every image. It can be than used to create various visualizations.
 ```python
-    model.fit(xTrain, yTrain, epochs=epochsNumber)
+    model.fit(x_train, y_train, epochs=epochs_number)
     
-    testLoss, testAcc = model.evaluate(xTest, yTest)
-    predictions = model.predict(xTest)
+    test_loss, test_acc = model.evaluate(x_test, y_test)
+    predictions = model.predict(x_test)
 ```
 
 ### Visualization
